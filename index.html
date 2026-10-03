@@ -57,11 +57,7 @@
 
     * { box-sizing: border-box; }
 
-    /* Cada página "encaja" en la pantalla al hacer scroll */
-    html {
-      scroll-behavior: smooth;
-      scroll-snap-type: y mandatory;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -173,47 +169,29 @@
     .sobre.abierto { opacity: 0; visibility: hidden; }
 
     /* =====================================================
-       PÁGINAS (TARJETAS)
+       INVITACIÓN: una sola pieza larga con imagen de fondo
        ===================================================== */
-    .contenido { padding: 0; }
+    .contenido {
+      width: calc(100% - 1.5rem);   /* deja ver el fondo verde a los costados */
+      max-width: 450px;              /* ancho real de la imagen de fondo */
+      margin: calc(.75rem + env(safe-area-inset-top, 0px)) auto calc(.75rem + env(safe-area-inset-bottom, 0px));
+      padding: 1.5rem 1.5rem 2.5rem;
+      background-color: var(--tarjeta);
+      background-image: url("img/img_background.png");
+      background-position: top center;
+      background-size: 100% 100%;    /* la imagen se estira para cubrir todo el largo */
+      background-repeat: no-repeat;
+      box-shadow: 0 2px 6px rgba(60, 50, 40, .08), 0 12px 40px rgba(60, 50, 40, .18);
+    }
 
-    /* Cada página ocupa exactamente una pantalla de celular */
+    /* Cada sección */
     .tarjeta {
-      position: relative;
-      width: 100%;
-      max-width: 30rem;
-      min-height: 100vh;   /* respaldo para navegadores antiguos */
-      min-height: 100svh;  /* alto real visible en el celular */
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: var(--tarjeta);
-      padding: calc(2.5rem + env(safe-area-inset-top, 0px)) 1.75rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
+      padding: 2rem 0;
       text-align: center;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
     }
 
-    /* En pantallas grandes se ve como un celular centrado sobre el fondo */
-    @media (min-width: 600px) {
-      .tarjeta {
-        box-shadow: 0 0 40px rgba(60, 50, 40, .08);
-      }
-    }
-
-    /* Marco de doble línea fina */
-    .tarjeta::before,
-    .tarjeta::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      border: 1px solid var(--dorado);
-      opacity: .55;
-    }
-
-    .tarjeta::before { inset: 10px; }
-    .tarjeta::after  { inset: 15px; opacity: .3; }
+    /* Ramita que separa las secciones */
+    .divisor { margin: 2.5rem auto; }
 
     .rama {
       display: block;
@@ -244,14 +222,10 @@
       margin: 0 0 .5rem !important;
     }
 
-    /* Fotos: se adaptan al ancho de la tarjeta */
-    /* Fotos: se ajustan para que la página nunca sea más alta que la pantalla */
+    /* Fotos: se adaptan al ancho de la invitación */
     .foto {
-      width: auto;
-      max-width: 100%;
+      width: 100%;
       height: auto;
-      max-height: 32svh;
-      object-fit: contain;
       margin: 1.5rem auto 0;
     }
 
@@ -285,16 +259,8 @@
       margin: 0 0 .5rem !important;
     }
 
-    .portada .foto { max-width: 18rem; max-height: 26svh; margin-bottom: 1rem; }
+    .portada .foto { max-width: 18rem; margin-bottom: 1rem; }
 
-    /* Celulares de pantalla baja (iPhone SE y similares): todo un poco más compacto */
-    @media (max-height: 700px) {
-      .tarjeta { padding-top: calc(1.75rem + env(safe-area-inset-top, 0px)); padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px)); }
-      .nombres { font-size: clamp(3rem, 13vw, 5rem); }
-      .intro, .se-casan { margin-top: .75rem !important; }
-      .rama { height: 2.25rem; }
-      .portada .foto { max-height: 22svh; }
-    }
 
     /* ---------- PÁGINA 2: CUÁNDO ---------- */
     /* Fecha estilo clásico: SÁBADO | 28 | NOVIEMBRE */
@@ -429,7 +395,6 @@
       margin-bottom: .5rem !important;
     }
 
-    .fotos-dress .foto { max-height: 26svh; }
     .fotos-dress .foto + .foto { margin-top: .75rem; }
 
     /* ---------- BOTONES ---------- */
@@ -481,8 +446,32 @@
 
     .cierre .firma { color: var(--tinta-suave); }
 
+    /* ---------- BOTÓN DE MÚSICA ---------- */
+    .musica {
+      position: fixed;
+      z-index: 5;
+      right: 1rem;
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 1px solid var(--dorado);
+      background: var(--tarjeta);
+      color: var(--dorado);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(60, 50, 40, .12);
+    }
+
+    .musica[hidden] { display: none; }
+    .musica svg { width: 1.3rem; height: 1.3rem; }
+    .musica .icono-off { display: none; }
+    .musica.silenciada .icono-on { display: none; }
+    .musica.silenciada .icono-off { display: block; }
+
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; scroll-snap-type: none; }
+      html { scroll-behavior: auto; }
       .sobre, .sobre-solapa, .sello, .boton { transition: none; }
     }
   </style>
@@ -515,9 +504,24 @@
     <p class="sobre-indicacion">Toca el sello para abrir</p>
   </div>
 
+  <!-- ============ MÚSICA ============
+       Pon tu canción en musica/cancion.mp3 (o cambia la ruta aquí). -->
+  <audio id="audio" src="musica/cancion.mp3" loop preload="auto"></audio>
+
+  <button class="musica" id="btn-musica" type="button" aria-label="Pausar música" hidden>
+    <svg class="icono-on" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
+      <path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <svg class="icono-off" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
+      <path d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+
   <main class="contenido">
 
-    <!-- ============ PÁGINA 1: PORTADA ============ -->
+    <!-- ============ PORTADA ============ -->
     <section class="tarjeta portada">
       <svg class="rama" aria-hidden="true"><use href="#rama"/></svg>
 
@@ -531,11 +535,19 @@
       <p class="invitado">¡y tú estás invitad@!</p>
 
       <img class="foto" src="img/img_logo_1.png" alt="Maria y Vicente">
-
-      <svg class="rama abajo" aria-hidden="true"><use href="#rama"/></svg>
     </section>
 
-    <!-- ============ PÁGINA 2: CUÁNDO ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ ÉRASE UNA VEZ ============ -->
+    <section class="tarjeta">
+      <h2>Érase una vez...</h2>
+      <!-- Contenido pendiente: aquí va su historia -->
+    </section>
+
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ CUÁNDO ============ -->
     <section class="tarjeta">
       <h2>¿Cuándo?</h2>
       <div class="fecha-clasica" aria-label="Sábado 28 de noviembre de 2026">
@@ -555,7 +567,9 @@
       <p class="mensaje-cuenta" id="mensaje-cuenta" hidden></p>
     </section>
 
-    <!-- ============ PÁGINA 3: ITINERARIO ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ ITINERARIO ============ -->
     <section class="tarjeta">
       <h2>Itinerario</h2>
       <ol class="programa">
@@ -567,7 +581,9 @@
       <img class="foto" src="img/img_itinerary.png" alt="" loading="lazy">
     </section>
 
-    <!-- ============ PÁGINA 4: DÓNDE ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ DÓNDE ============ -->
     <section class="tarjeta">
       <h2>¿Dónde?</h2>
       <p class="direccion">
@@ -595,7 +611,9 @@
       </div>
     </section>
 
-    <!-- ============ PÁGINA 5: DRESS CODE ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ DRESS CODE ============ -->
     <section class="tarjeta">
       <h2>Dress Code</h2>
       <p class="tipo-dress">Tipo cóctel</p>
@@ -607,7 +625,9 @@
       </div>
     </section>
 
-    <!-- ============ PÁGINA 6: SAVE THE DATE ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ SAVE THE DATE ============ -->
     <section class="tarjeta">
       <p class="subtitulo">Save the date</p>
       <h2>Guarda la fecha</h2>
@@ -618,23 +638,29 @@
       </div>
     </section>
 
-    <!-- ============ PÁGINA 7: REGALOS ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ REGALOS ============ -->
     <section class="tarjeta">
       <h2>Regalos</h2>
       <!-- Contenido pendiente -->
     </section>
 
-    <!-- ============ PÁGINA 8: PLAYLIST ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ PLAYLIST ============ -->
     <section class="tarjeta">
       <h2>¡Únete a nuestra playlist!</h2>
       <p>Guarda aquí tus canciones favoritas para que también sean parte de nuestra celebración.</p>
       <div class="botones">
-        <!-- REEMPLAZA el # por el link de invitación a tu playlist colaborativa de Spotify -->
-        <a class="boton principal" href="#" target="_blank" rel="noopener">Agregar canciones en Spotify</a>
+        <!-- El link se toma del archivo config.js (actualízalo cada semana ahí) -->
+        <a class="boton principal" id="btn-playlist" href="#" target="_blank" rel="noopener">Agregar canciones en Spotify</a>
       </div>
     </section>
 
-    <!-- ============ PÁGINA 9: FOTOS ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ FOTOS ============ -->
     <section class="tarjeta">
       <h2>¡Sube tus fotos!</h2>
       <p>Si capturas momentos especiales durante nuestra celebración, compártelos aquí para que todos puedan verlos.</p>
@@ -644,9 +670,10 @@
       </div>
     </section>
 
-    <!-- ============ PÁGINA 10: CIERRE ============ -->
+    <svg class="rama divisor" aria-hidden="true"><use href="#rama"/></svg>
+
+    <!-- ============ CIERRE ============ -->
     <section class="tarjeta cierre">
-      <svg class="rama" aria-hidden="true"><use href="#rama"/></svg>
       <p class="gracias">Te esperamos</p>
       <p class="firma">Maria y Vicente</p>
       <svg class="rama abajo" aria-hidden="true"><use href="#rama"/></svg>
@@ -654,7 +681,15 @@
 
   </main>
 
+  <!-- Links que se actualizan seguido (playlist de Spotify) -->
+  <script src="config.js"></script>
+
   <script>
+    /* ---------- Link de la playlist (viene de config.js) ---------- */
+    if (window.LINK_PLAYLIST) {
+      document.getElementById("btn-playlist").href = window.LINK_PLAYLIST;
+    }
+
     /* =========================================================
        DATOS DEL EVENTO
        Hora de Chile en noviembre = horario de verano (UTC-3).
@@ -667,6 +702,50 @@
       fin: new Date("2026-11-29T02:00:00-03:00") // hora de término estimada
     };
 
+    /* ---------- Música ---------- */
+    const audio = document.getElementById("audio");
+    const btnMusica = document.getElementById("btn-musica");
+    const VOLUMEN_FINAL = 0.6; // entre 0 y 1
+    let pausadaPorUsuario = false;
+
+    function subirVolumen() {
+      // Entrada suave del sonido en ~2 segundos
+      audio.volume = 0;
+      const paso = setInterval(() => {
+        audio.volume = Math.min(VOLUMEN_FINAL, audio.volume + 0.03);
+        if (audio.volume >= VOLUMEN_FINAL) clearInterval(paso);
+      }, 100);
+    }
+
+    function iniciarMusica() {
+      audio.play()
+        .then(() => {
+          subirVolumen();
+          btnMusica.hidden = false;
+        })
+        .catch(() => { /* si no hay archivo o el navegador lo bloquea, no se muestra el botón */ });
+    }
+
+    btnMusica.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        pausadaPorUsuario = false;
+      } else {
+        audio.pause();
+        pausadaPorUsuario = true;
+      }
+      const silenciada = audio.paused;
+      btnMusica.classList.toggle("silenciada", silenciada);
+      btnMusica.setAttribute("aria-label", silenciada ? "Reproducir música" : "Pausar música");
+    });
+
+    // Pausar si la persona cambia de app o de pestaña, y retomar al volver
+    document.addEventListener("visibilitychange", () => {
+      if (btnMusica.hidden) return;
+      if (document.hidden) audio.pause();
+      else if (!pausadaPorUsuario) audio.play().catch(() => {});
+    });
+
     /* ---------- Sobre de entrada ---------- */
     (function sobre() {
       const sobre = document.getElementById("sobre");
@@ -676,6 +755,7 @@
         sobre.classList.add("abierto");
         document.body.classList.remove("cerrado");
         setTimeout(() => sobre.remove(), 1800);
+        iniciarMusica(); // el toque en el sello permite reproducir sonido
       }
 
       sello.addEventListener("click", abrir);
