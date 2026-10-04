@@ -358,7 +358,16 @@
       margin-right: auto;
     }
 
+    /* Foto de la playa recortada en círculo.
+       TAMAÑO: cambia "width" (porcentaje del ancho de la invitación).
+       ENCUADRE: si se corta una cara, cambia "object-position"
+       (por ejemplo: top, bottom, 50% 30%...). */
     .foto-historia {
+      width: 85%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
       margin: .5rem auto 1.75rem;
     }
 
@@ -524,7 +533,7 @@
       margin: 0 auto 2rem;
       padding: 0;
       text-align: left;
-      font-size: 0.75rem;
+      font-size: 1rem;
     }
 
     .reglas-dress li {
@@ -600,6 +609,39 @@
       height: 120%;
       background: var(--dorado);
       transform: translateX(-50%) rotate(45deg);
+    }
+
+    /* ---------- REGALOS ---------- */
+    .cuenta-banco {
+      max-width: 20rem;
+      margin: 1.5rem auto 0;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--dorado);
+      background: rgba(255, 253, 249, .7);
+      text-align: left;
+      font-size: 1rem;
+    }
+
+    .cuenta-banco div {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .35rem 0;
+    }
+
+    .cuenta-banco div+div {
+      border-top: 1px solid var(--linea);
+    }
+
+    .cuenta-banco dt {
+      color: var(--tinta-suave);
+    }
+
+    .cuenta-banco dd {
+      margin: 0;
+      font-weight: 600;
+      text-align: right;
+      overflow-wrap: anywhere;
     }
 
     /* ---------- BOTONES ---------- */
@@ -845,7 +887,7 @@
     <section class="tarjeta">
       <h2>Itinerario</h2>
       <ol class="programa">
-        <li><span class="hora">18:30 - 19:00</span><span>Llegan los invitados</span></li>
+        <li><span class="hora">19:00</span><span>Llegan los invitados</span></li>
         <li><span class="hora">19:30</span><span>Firma del matrimonio</span>
         <li><span class="hora">20:00</span><span>Brindis y fotos</span>
         <li><span class="hora">20:30</span><span>¡Que comience la fiesta! Hasta que el cuerpo aguante, o
@@ -941,7 +983,40 @@
     <!-- ============ REGALOS ============ -->
     <section class="tarjeta">
       <h2>Regalos</h2>
-      <!-- Contenido pendiente -->
+      <p>No contamos con lista de novios, por lo que tu transferencia será nuestro mejor regalo 🧡</p>
+
+      <!-- REEMPLAZA los datos de ejemplo por los de tu cuenta.
+           El botón "Copiar datos" copia exactamente lo que esté escrito aquí. -->
+      <dl class="cuenta-banco" id="datos-banco">
+        <div>
+          <dt>Nombre</dt>
+          <dd>Maria Ramos</dd>
+        </div>
+        <div>
+          <dt>RUT</dt>
+          <dd>23273875-4</dd>
+        </div>
+        <div>
+          <dt>Banco</dt>
+          <dd>Santander</dd>
+        </div>
+        <div>
+          <dt>Tipo de cuenta</dt>
+          <dd>Cuenta Corriente</dd>
+        </div>
+        <div>
+          <dt>N° de cuenta</dt>
+          <dd>000074421296</dd>
+        </div>
+        <div>
+          <dt>Correo</dt>
+          <dd>carlinar36@gmail.com</dd>
+        </div>
+      </dl>
+
+      <div class="botones">
+        <button class="boton principal" id="btn-copiar-banco" type="button">Copiar datos</button>
+      </div>
     </section>
 
     <svg class="rama divisor" aria-hidden="true">
@@ -981,7 +1056,8 @@
     <!-- ============ CIERRE ============ -->
     <section class="tarjeta cierre">
       <p class="gracias">Te esperamos</p>
-      <p class="firma">María y Vicente</p>
+      <p class="firma">María y Vicente (Nitti)</p>
+      <img class="logo" src="img/img_logo_1.png" alt="Maria y Vicente">
       <svg class="rama abajo" aria-hidden="true">
         <use href="#rama" />
       </svg>
@@ -1103,6 +1179,28 @@
       if (actualizar()) {
         const intervalo = setInterval(() => { if (!actualizar()) clearInterval(intervalo); }, 1000);
       }
+    })();
+
+    /* ---------- Copiar datos bancarios ---------- */
+    (function copiarBanco() {
+      const boton = document.getElementById("btn-copiar-banco");
+      const textoOriginal = boton.textContent;
+
+      boton.addEventListener("click", async () => {
+        // Arma el texto "Nombre: ...", "RUT: ...", etc. a partir de la tabla
+        const filas = [...document.querySelectorAll("#datos-banco div")];
+        const texto = filas
+          .map(f => f.querySelector("dt").textContent + ": " + f.querySelector("dd").textContent)
+          .join("\n");
+
+        try {
+          await navigator.clipboard.writeText(texto);
+          boton.textContent = "¡Datos copiados!";
+        } catch (e) {
+          boton.textContent = "No se pudo copiar";
+        }
+        setTimeout(() => { boton.textContent = textoOriginal; }, 2500);
+      });
     })();
 
     /* ---------- Botones de calendario ---------- */
