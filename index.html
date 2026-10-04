@@ -349,6 +349,39 @@
     }
 
 
+    /* ---------- NUESTRA HISTORIA ---------- */
+    /* Título más chico que los demás porque es una frase larga */
+    .historia h2 {
+      font-size: clamp(1.9rem, 8vw, 2.4rem);
+      max-width: 20rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .foto-historia {
+      margin: .5rem auto 1.75rem;
+    }
+
+    .historia p {
+      max-width: 24rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .firma-historia {
+      font-family: "Caveat Brush", "Segoe Print", "Bradley Hand", cursive;
+      font-size: 1.7rem;
+      line-height: 1.2;
+      color: var(--dorado);
+      margin-top: 1.5rem !important;
+    }
+
+    .firma-historia span {
+      display: block;
+      font-size: .8em;
+      color: var(--tinta-suave);
+    }
+
     /* ---------- PÁGINA 2: CUÁNDO ---------- */
     /* Fecha estilo clásico: SÁBADO | 28 | NOVIEMBRE */
     .fecha-clasica {
@@ -525,7 +558,7 @@
     .titulo-colores {
       font-family: var(--mano);
       font-variation-settings: "SOFT" 100, "WONK" 1;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       line-height: 1.2;
       margin: 0 0 1rem !important;
     }
@@ -754,10 +787,30 @@
       <use href="#rama" />
     </svg>
 
-    <!-- ============ ÉRASE UNA VEZ ============ -->
-    <section class="tarjeta">
-      <h2>Érase una vez...</h2>
-      <!-- Contenido pendiente: aquí va su historia -->
+    <!-- ============ NUESTRA HISTORIA ============ -->
+    <section class="tarjeta historia">
+      <h2>¡Hola! Te contamos un poco de nuestra historia...</h2>
+
+      <img class="foto foto-historia" src="img/img_beach.png" alt="María y Vicente" loading="lazy">
+
+      <p>Comenzó en Chile a principios del 2019 gracias a nuestros cupidos Jenyfer Olivera y Coca Pastora 🐾</p>
+      <p>Todo comenzó por una casual conversación por Instagram, gracias a una foto de Coca Pastora (nuestra perrita), y
+        luego Jeny nos presentó en persona (contexto: Jeny era amiga de ambos desde hace muchos años, aunque nosotros
+        aún no nos conocíamos).</p>
+      <p>En el 2020, un poco impulsados por la pandemia, tomamos la decisión de irnos a vivir juntos 🥰. Desde entonces
+        comenzamos a formar nuestra familia junto con nuestra hija perruna, Coca Pastora.</p>
+      <p>En el 2024 nos comprometimos en un viaje soñado a Brasil 💍 (el anillo fue una total sorpresa para María,
+        porque no fue un tema del que se hablara previamente).</p>
+      <p>Repentinamente, a finales de este año, nos dio por casarnos y organizar una boda en menos de 3 meses,
+        acompañados e impulsados por nuestra familia y amigos, que no dudaron en ningún momento en decir “¡Nosotros los
+        ayudamos!”.</p>
+      <p>Y aquí estamos, con una fecha decidida y felices de poder compartir contigo ese día tan especial. Gracias por
+        ser parte 🧡</p>
+
+      <p class="firma-historia">
+        <span>Con amor,</span>
+        María Ramos y Vicente Nitti
+      </p>
     </section>
 
     <svg class="rama divisor" aria-hidden="true">
@@ -813,23 +866,24 @@
     <section class="tarjeta">
       <h2>¿Dónde?</h2>
       <p class="direccion">
-        Leonardo da Vinci 7074
-        <small>Las Condes, Santiago</small>
+        Avenida Manquehue Norte 958
+        <small>Quincho</small>
+        <small>Las Condes</small>
       </p>
 
       <div class="mapa">
-        <iframe title="Mapa: Leonardo da Vinci 7074, Las Condes"
-          src="https://maps.google.com/maps?q=Leonardo%20da%20Vinci%207074%2C%20Las%20Condes%2C%20Chile&z=16&output=embed"
+        <iframe title="Mapa: Avenida Manquehue Norte 958, Las Condes"
+          src="https://maps.google.com/maps?q=Avenida%20Manquehue%20Norte%20958%2C%20Las%20Condes%2C%20Chile&z=16&output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
       <div class="botones">
         <a class="boton principal" target="_blank" rel="noopener"
-          href="https://www.google.com/maps/search/?api=1&query=Leonardo+da+Vinci+7074%2C+Las+Condes%2C+Chile">
+          href="https://www.google.com/maps/search/?api=1&query=Avenida+Manquehue+Norte+958%2C+Las+Condes%2C+Chile">
           Google Maps
         </a>
         <a class="boton" target="_blank" rel="noopener"
-          href="https://waze.com/ul?q=Leonardo%20da%20Vinci%207074%20Las%20Condes&navigate=yes">
+          href="https://waze.com/ul?q=Avenida%20Manquehue%20Norte%20958%20Las%20Condes&navigate=yes">
           Waze
         </a>
       </div>
@@ -856,7 +910,7 @@
 
       </ul>
 
-      <p class="titulo-colores">Colores a evitar</p>
+      <p class="titulo-colores">Colores de vestidos a evitar</p>
       <ul class="colores">
         <li><span class="muestra" style="background:#FFFFFF"></span>Blanco</li>
         <li><span class="muestra" style="background:#E8DCC4"></span>Beige</li>
@@ -915,7 +969,8 @@
       <p>Si capturas momentos especiales durante nuestra celebración, compártelos aquí para que todos puedan verlos.</p>
       <div class="botones">
         <!-- REEMPLAZA el # por el link del álbum compartido -->
-        <a class="boton principal" href="#" target="_blank" rel="noopener">Subir fotos</a>
+        <a class="boton principal" href="https://photos.app.goo.gl/XKrvJdDqDxE1dVBS8" target="_blank"
+          rel="noopener">Subir fotos</a>
       </div>
     </section>
 
@@ -926,7 +981,7 @@
     <!-- ============ CIERRE ============ -->
     <section class="tarjeta cierre">
       <p class="gracias">Te esperamos</p>
-      <p class="firma">Maria y Vicente</p>
+      <p class="firma">María y Vicente</p>
       <svg class="rama abajo" aria-hidden="true">
         <use href="#rama" />
       </svg>
@@ -949,7 +1004,7 @@
        ========================================================= */
     const EVENTO = {
       titulo: "Matrimonio de Maria y Vicente",
-      lugar: "Leonardo da Vinci 7074, Las Condes, Santiago, Chile",
+      lugar: "Avenida Manquehue Norte 958 (Quincho), Las Condes, Santiago, Chile",
       descripcion: "19:00 comienza la fiesta. 19:30 firma del matrimonio.",
       inicio: new Date("2026-11-28T19:00:00-03:00"),
       fin: new Date("2026-11-29T02:00:00-03:00") // hora de término estimada
