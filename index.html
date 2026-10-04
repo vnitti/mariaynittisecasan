@@ -480,14 +480,93 @@
     }
 
     /* ---------- PÁGINA 5: DRESS CODE ---------- */
-    .tipo-dress {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: .5rem !important;
+    .foto-dress {
+      margin: 0 auto 1.75rem;
     }
 
-    .fotos-dress .foto+.foto {
-      margin-top: .75rem;
+    /* Lista de "No": cada línea con una pequeña cruz en color de acento */
+    .reglas-dress {
+      list-style: none;
+      max-width: 22rem;
+      margin: 0 auto 2rem;
+      padding: 0;
+      text-align: left;
+      font-size: 0.75rem;
+    }
+
+    .reglas-dress li {
+      position: relative;
+      padding-left: 1.6rem;
+      margin-bottom: .35rem;
+    }
+
+    .reglas-dress li::before {
+      content: "✕";
+      position: absolute;
+      left: 0;
+      top: .05em;
+      color: var(--dorado);
+      font-weight: 700;
+    }
+
+    /* Línea del blazer: mismo tamaño que las demás, sin ícono y en cursiva */
+    .reglas-dress li.nota-dress {
+      padding-left: 0;
+      margin-top: .6rem;
+      color: var(--tinta-suave);
+      font-style: italic;
+    }
+
+    .reglas-dress li.nota-dress::before {
+      content: none;
+    }
+
+    /* Muestras de color */
+    .titulo-colores {
+      font-family: var(--mano);
+      font-variation-settings: "SOFT" 100, "WONK" 1;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      margin: 0 0 1rem !important;
+    }
+
+    .colores {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .5rem;
+    }
+
+    .colores li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      font-size: .9rem;
+      line-height: 1.2;
+    }
+
+    .muestra {
+      position: relative;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      border: 1px solid var(--linea);
+      box-shadow: 0 2px 5px rgba(60, 50, 40, .15);
+    }
+
+    /* Línea diagonal que tacha cada color */
+    .muestra::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -10%;
+      width: 2px;
+      height: 120%;
+      background: var(--dorado);
+      transform: translateX(-50%) rotate(45deg);
     }
 
     /* ---------- BOTONES ---------- */
@@ -660,7 +739,7 @@
 
       <p class="intro">Ponte guap@, porque...</p>
       <h1 class="nombres">
-        <span>Maria</span>
+        <span>María</span>
         <span class="y">&amp;</span>
         <span>Vicente</span>
       </h1>
@@ -713,8 +792,13 @@
     <section class="tarjeta">
       <h2>Itinerario</h2>
       <ol class="programa">
-        <li><span class="hora">19:00</span><span>Comienza la fiesta</span></li>
-        <li><span class="hora">19:30</span><span>Firma del matrimonio</span></li>
+        <li><span class="hora">18:30 - 19:00</span><span>Llegan los invitados</span></li>
+        <li><span class="hora">19:30</span><span>Firma del matrimonio</span>
+        <li><span class="hora">20:00</span><span>Brindis y fotos</span>
+        <li><span class="hora">20:30</span><span>¡Que comience la fiesta! Hasta que el cuerpo aguante, o
+            hasta que nos corran (aprox. 02:00 AM)</span>
+          </span>
+        </li>
       </ol>
       <p>¡Por fa no llegues tarde! No queremos que te lo pierdas, y queremos que estés en nuestra foto.</p>
 
@@ -758,13 +842,27 @@
     <!-- ============ DRESS CODE ============ -->
     <section class="tarjeta">
       <h2>Dress Code</h2>
-      <p class="tipo-dress">Tipo cóctel</p>
-      <p>¡Ponte guap@, pero también ponte cómod@!</p>
 
-      <div class="fotos-dress">
-        <img class="foto" src="img/img_dresscode_m.png" alt="Referencia de vestimenta para hombres" loading="lazy">
-        <img class="foto" src="img/img_dresscode_w.png" alt="Referencia de vestimenta para mujeres" loading="lazy">
-      </div>
+      <img class="foto foto-dress" src="img/img_dresscode.png" alt="Referencia de vestimenta" loading="lazy">
+
+      <ul class="reglas-dress">
+        <li>No jeans</li>
+        <li>No zapatillas deportivas</li>
+        <li>No saco y corbata</li>
+        <li>No lentejuelas</li>
+        <li class="nota-dress">Si usas blazer, que sea oscuro (azul, gris, negro). Los tonos claros están reservados
+          para el novio
+          novio&nbsp;:)</li>
+
+      </ul>
+
+      <p class="titulo-colores">Colores a evitar</p>
+      <ul class="colores">
+        <li><span class="muestra" style="background:#FFFFFF"></span>Blanco</li>
+        <li><span class="muestra" style="background:#E8DCC4"></span>Beige</li>
+        <li><span class="muestra" style="background:#B3262E"></span>Rojo</li>
+        <li><span class="muestra" style="background:#1E1E1E"></span>Negro</li>
+      </ul>
     </section>
 
     <svg class="rama divisor" aria-hidden="true">
